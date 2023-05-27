@@ -8,7 +8,7 @@ const app = express();
 // Directory
 const dirname = path.join(__dirname, "timeStamps");
 
-// Get Request
+// 1.Api endpoint for writting timestamps
 app.get("/date", (req, res) => {
   // date and time logics
   let date = new Date();
@@ -25,6 +25,18 @@ app.get("/date", (req, res) => {
       return;
     }
     res.sendFile(path.join(dirname, `${seedatetime}.txt`));
+  });
+});
+
+//2. End point for retrieve all text files
+
+app.get("/all", (req, res) => {
+  fs.readdir(dirname, (error, files) => {
+    if (error) {
+      res.send("error in fetching file");
+      return;
+    }
+    res.send(files);
   });
 });
 
